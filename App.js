@@ -1,6 +1,5 @@
 import React from "react";
 import { SimpleAnimation } from "react-native-simple-animations";
-import HorScroll from "./scrollView";
 import { createStackNavigator, createAppContainer } from "react-navigation";
 import {
   View,
@@ -10,12 +9,9 @@ import {
   Animated,
   ScrollView,
   Dimensions,
-  AsyncStorage,
-  Keyboard,
-  TextInput
+  AsyncStorage
 } from "react-native";
-//import { Button } from "native-base";
-//import AsyncStorage from '@react-native-community/async-storage';
+import AddItem from "./addItem";
 
 class HomeScreen extends React.Component {
   constructor() {
@@ -37,7 +33,7 @@ class HomeScreen extends React.Component {
   };
 
   _retrieveData = async () => {
-    // AsyncStorage.clear();
+     //AsyncStorage.clear();
 
     try {
       const value = await AsyncStorage.getItem("Items");
@@ -45,7 +41,7 @@ class HomeScreen extends React.Component {
         this.setState({ data: JSON.parse(value) });
       }
     } catch (error) {
-      // alert(error)
+      alert(error);
     }
   };
   componentDidMount() {
@@ -59,14 +55,13 @@ class HomeScreen extends React.Component {
 
   render() {
     let screenWidth = Dimensions.get("window").width;
-    //alert(JSON.stringify(this.state.data))
     const arr = this.state.data;
     if (arr) {
       return (
         <View style={styles.container}>
           {this.state.isVisible ? (
-            <SimpleAnimation delay={100} duration={300} fade staticType="zoom">
-              <DetailsScreen sendData={this.getData} />
+            <SimpleAnimation delay={100} duration={100} fade staticType="zoom">
+              <AddItem sendData={this.getData} />
               <View>
                 <TouchableOpacity
                   onPress={this.newNote}
@@ -75,6 +70,8 @@ class HomeScreen extends React.Component {
               </View>
             </SimpleAnimation>
           ) : (
+  
+
             <View style={styles.container}>
               <ScrollView
                 automaticallyAdjustContentInsets={false}
@@ -84,57 +81,31 @@ class HomeScreen extends React.Component {
                 snapToAlignment={"center"}
                 contentInset={{ top: 0, left: 0, bottom: 0, right: 0 }}
               >
-                {arr.map((item) => {
+                {arr.map(item => {
                   return (
-                  <TouchableOpacity
-                    style={{
-                      marginTop: 90,
-                      width: screenWidth,
-                      height: 400,
-                      backgroundColor: "white"
-                    }}
-                  >
                     <TouchableOpacity
                       style={{
-                        width: screenWidth - 60,
-                        marginLeft: 30,
+                        marginTop: 90,
+                        width: screenWidth,
                         height: 400,
-                        backgroundColor: "powderblue",
-                        borderRadius: "40px"
+                        backgroundColor: "white"
                       }}
                     >
-                      <Text
+                      <TouchableOpacity
                         style={{
-                          fontFamily: "'Roboto', sans-serif",
-                          marginTop: 40,
-                          height: 40,
-                          fontSize: "25%"
+                          width: screenWidth - 60,
+                          marginLeft: 30,
+                          height: 400,
+                          backgroundColor: "powderblue",
+                          borderRadius: "40px"
                         }}
                       >
-                        {item.when}
-                      </Text>
-                      <Text
-                        style={{
-                          fontFamily: "'Roboto', sans-serif",
-                          marginTop: 40,
-                          height: 40,
-                          fontSize: "25%"
-                        }}
-                      >
-                        {item.what}
-                      </Text>
-                      <Text
-                        style={{
-                          fontFamily: "'Roboto', sans-serif",
-                          marginTop: 40,
-                          height: 40,
-                          fontSize: "25%"
-                        }}
-                      >
-                        {item.why}
-                      </Text>
+                        <Text style={styles.textStyle}>{item.when}</Text>
+                        <Text style={styles.textStyle}>{item.what}</Text>
+                        <Text style={styles.textStyle}>{item.why}</Text>
+                      </TouchableOpacity>
                     </TouchableOpacity>
-                  </TouchableOpacity>)
+                  );
                 })}
               </ScrollView>
               <View>
@@ -144,199 +115,48 @@ class HomeScreen extends React.Component {
                 ></TouchableOpacity>
               </View>
             </View>
+
           )}
         </View>
       );
-    } else {
-      return <Text> no </Text>;
-    }
-  }
-}
-
-class DetailsScreen extends React.Component {
-  constructor() {
-    super();
-    this.state = {
-      isVisible: false,
-      text: "What Date?",
-      what: "What is it?",
-      why: "Why?",
-      step: 0,
-      data: null
-    };
-  }
-
-  componentDidMount() {
-    this._retrieveData();
-    this.keyboardDidShowListener = Keyboard.addListener(
-      "keyboardDidShow",
-      this._keyboardDidShow
-    );
-    this.keyboardDidHideListener = Keyboard.addListener(
-      "keyboardDidHide",
-      this._keyboardDidHide
-    );
-  }
-
-  _retrieveData = async () => {
-    try {
-      const value = await AsyncStorage.getItem("Items");
-      if (value !== null) {
-        this.setState({ data: value });
-      }
-    } catch (error) {
-      // Error retrieving data
-    }
-  };
-
-  componentWillUnmount() {
-    this.keyboardDidShowListener.remove();
-    this.keyboardDidHideListener.remove();
-  }
-
-  _keyboardDidShow() {
-    // alert('Keyboard Shown');
-  }
-
-  _keyboardDidHide() {
-    // alert('Keyboard Hidden');
-  }
-
-  _storeData = async () => {
-    let value = null;
-    if (this.state.data !== null) {
-      value = JSON.parse(this.state.data);
-      const newItem = {
-        when: this.state.text,
-        what: this.state.what,
-        why: this.state.why
-      };
-      value.push(newItem);
-    } else {
-      value = [];
-      const newItem = {
-        when: this.state.text,
-        what: this.state.what,
-        why: this.state.why
-      };
-      value.push(newItem);
-    }
-    try {
-      await AsyncStorage.setItem("Items", JSON.stringify(value));
-      this.props.sendData("value");
-    } catch (error) {
-      //alert(error)
-      // Error saving data
-    }
-  };
-
-  render() {
-    if (this.state.step === 0) {
+    } else if (this.state.isVisible === true){
       return (
-        <View style={styles.makeThing}>
-          <View style={styles.container2}>
-            <SimpleAnimation delay={200} duration={500} fade staticType="zoom">
-              <TextInput
-                style={{ height: 40, fontSize: "25%" }}
-                onChangeText={text => this.setState({ text })}
-                value={this.state.text}
-                returnKeyType="done"
-                onSubmitEditing={event => this.setState({ step: 1 })}
-              />
-            </SimpleAnimation>
+        <View style={styles.container}>
+          <SimpleAnimation delay={100} duration={300} fade staticType="zoom">
+            <AddItem sendData={this.getData} />
+            <View>
+              <TouchableOpacity
+                onPress={this.newNote}
+                style={styles.myButton2}
+              ></TouchableOpacity>
+            </View>
+          </SimpleAnimation>
           </View>
-        </View>
-      );
-    }
-    if (this.state.step === 1) {
+      )
+    } 
+    
+    
+    else {
       return (
-        <View style={styles.makeThing}>
-          <View style={styles.container2}>
-            <SimpleAnimation delay={200} duration={500} fade staticType="zoom">
-              <TextInput
-                style={{ height: 40, fontSize: "25%" }}
-                onChangeText={text => this.setState({ text })}
-                value={this.state.text}
-                returnKeyType="done"
-                onSubmitEditing={event => this.setState({ step: 1 })}
-              />
-              <TextInput
-                style={{ marginTop: 40, height: 40, fontSize: "25%" }}
-                onChangeText={what => this.setState({ what })}
-                value={this.state.what}
-                returnKeyType="done"
-                onSubmitEditing={event => this.setState({ step: 2 })}
-              />
-            </SimpleAnimation>
-          </View>
-        </View>
-      );
-    }
-    if (this.state.step === 2) {
-      return (
-        <View style={styles.makeThing}>
-          <View style={styles.container2}>
-            <SimpleAnimation delay={200} duration={500} fade staticType="zoom">
-              <TextInput
-                style={{ height: 40, fontSize: "25%" }}
-                onChangeText={text => this.setState({ text })}
-                value={this.state.text}
-                returnKeyType="done"
-                onSubmitEditing={event => this.setState({ step: 1 })}
-              />
-              <TextInput
-                style={{ marginTop: 40, height: 40, fontSize: "25%" }}
-                onChangeText={what => this.setState({ what })}
-                value={this.state.what}
-                returnKeyType="done"
-                onSubmitEditing={event => this.setState({ step: 2 })}
-              />
-              <TextInput
-                style={{ marginTop: 40, height: 40, fontSize: "25%" }}
-                onChangeText={why => this.setState({ why })}
-                value={this.state.why}
-                returnKeyType="done"
-                onSubmitEditing={event => this.setState({ step: 3 })}
-              />
-            </SimpleAnimation>
-          </View>
-        </View>
-      );
-    }
-    if (this.state.step === 3) {
-      return (
-        <View style={styles.makeThing}>
-          <View style={styles.container2}>
-            <SimpleAnimation delay={200} duration={500} fade staticType="zoom">
-              <TextInput
-                style={{ height: 40, fontSize: "25%" }}
-                onChangeText={text => this.setState({ text })}
-                value={this.state.text}
-                returnKeyType="done"
-                onSubmitEditing={event => this.setState({ step: 1 })}
-              />
-              <TextInput
-                style={{ marginTop: 40, height: 40, fontSize: "25%" }}
-                onChangeText={what => this.setState({ what })}
-                value={this.state.what}
-                returnKeyType="done"
-                onSubmitEditing={event => this.setState({ step: 2 })}
-              />
-              <TextInput
-                style={{ marginTop: 40, height: 40, fontSize: "25%" }}
-                onChangeText={why => this.setState({ why })}
-                value={this.state.why}
-                returnKeyType="done"
-                onSubmitEditing={event => this.setState({ step: 3 })}
-              />
-            </SimpleAnimation>
-          </View>
-          <TouchableOpacity
-            onPress={this._storeData}
-            style={styles.myButton3}
-          ></TouchableOpacity>
-        </View>
-      );
+        <View style={styles.container}>
+
+                      <TouchableOpacity
+                        style={{
+                          width: screenWidth - 60,
+                          height: 400,
+                          backgroundColor: 'Blue',
+                          borderRadius: "40px",
+                          borderStyle: "dotted",
+                        }}
+                      ></TouchableOpacity>
+
+                      <View>
+                <TouchableOpacity
+                  onPress={this.newNote}
+                  style={styles.myButton}
+                ></TouchableOpacity>
+              </View>
+        </View>);
     }
   }
 }
@@ -346,20 +166,6 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center"
-  },
-  container2: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "top",
-    marginTop: 30
-  },
-  makeThing: {
-    fontFamily: "'Roboto', sans-serif",
-    marginTop: 90,
-    width: 300,
-    height: 400,
-    backgroundColor: "#edfcfa",
-    borderRadius: "40px"
   },
   myButton: {
     marginBottom: 30,
@@ -375,34 +181,16 @@ const styles = StyleSheet.create({
     height: 80,
     width: 80,
     borderRadius: 400,
-    backgroundColor: "#e2fadc",
     marginLeft: 120
   },
-  myButton3: {
-    marginBottom: 30,
-    padding: 5,
-    height: 80,
-    width: 80,
-    borderRadius: 400,
-    backgroundColor: "green",
-    marginLeft: 120
+  textStyle: {
+    textAlign: 'center',
+    fontFamily: "'Roboto', sans-serif",
+    marginTop: 40,
+    height: 40,
+    fontSize: "25%"
   }
 });
-
-const RootStack = createStackNavigator(
-  {
-    Home: HomeScreen,
-    Details: DetailsScreen
-  },
-  {
-    initialRouteName: "Home"
-  },
-  {
-    mode: "modal"
-  }
-);
-
-const AppContainer = createAppContainer(RootStack);
 
 export default class App extends React.Component {
   render() {
