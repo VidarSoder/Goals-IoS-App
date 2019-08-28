@@ -8,7 +8,8 @@ import {
   AsyncStorage,
   Keyboard,
   TextInput,
-  StyleSheet
+  StyleSheet,
+  DatePickerIOS
 } from "react-native";
 
 export default class DetailsScreen extends React.Component {
@@ -229,10 +230,10 @@ const styles = StyleSheet.create({
     width: 300,
     height: 400,
     backgroundColor: "#edfcfa",
-    borderRadius: "40px"
+    borderRadius: "40px",
   },
   myButton3: {
-    marginBottom: 30,
+    marginBottom: 90,
     height: 80,
     width: 80,
     borderRadius: 400,
