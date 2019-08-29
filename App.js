@@ -36,7 +36,7 @@ class HomeScreen extends React.Component {
   };
 
   _retrieveData = async () => {
-    //AsyncStorage.clear();
+   // AsyncStorage.clear();
 
     try {
       const value = await AsyncStorage.getItem("Items");
@@ -77,6 +77,7 @@ class HomeScreen extends React.Component {
               </View>
             </SimpleAnimation>
           ) : (
+
             <AllItemsScroll
               itemArr={arr}
               screenWidth={screenWidth}
@@ -101,6 +102,7 @@ class HomeScreen extends React.Component {
       );
     } else {
       return (
+
         <View style={styles.container}>
           <TouchableOpacity
             style={{
@@ -119,6 +121,7 @@ class HomeScreen extends React.Component {
             ></TouchableOpacity>
           </View>
         </View>
+
       );
     }
   }

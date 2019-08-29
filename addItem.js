@@ -92,7 +92,7 @@ export default class DetailsScreen extends React.Component {
       return (
         <View style={styles.makeThing}>
           <View style={styles.container2}>
-            <SimpleAnimation delay={200} duration={500} fade staticType="zoom">
+            <SimpleAnimation delay={200} duration={600} fade staticType="zoom">
               <Text style={styles.firstText}>What Date?</Text>
               <DatePicker
                 style={{ width: 200 }}
@@ -105,12 +105,13 @@ export default class DetailsScreen extends React.Component {
                 customStyles={{
                   dateIcon: {
                     position: "absolute",
-                    left: 0,
+                    left: 35,
                     top: 4,
                     marginLeft: 0
                   },
                   dateInput: {
-                    marginLeft: 36
+                    borderWidth: 0,
+                    marginLeft: 20
                   }
                   // ... You can check the source to find the other keys.
                 }}
@@ -140,12 +141,13 @@ export default class DetailsScreen extends React.Component {
                 customStyles={{
                   dateIcon: {
                     position: "absolute",
-                    left: 0,
+                    left: 35,
                     top: 4,
                     marginLeft: 0
                   },
                   dateInput: {
-                    marginLeft: 36
+                    borderWidth: 0,
+                    marginLeft: 20
                   }
                   // ... You can check the source to find the other keys.
                 }}
@@ -192,12 +194,13 @@ export default class DetailsScreen extends React.Component {
                 customStyles={{
                   dateIcon: {
                     position: "absolute",
-                    left: 0,
+                    left: 35,
                     top: 4,
                     marginLeft: 0
                   },
                   dateInput: {
-                    marginLeft: 36
+                    borderWidth: 0,
+                    marginLeft: 20
                   }
                   // ... You can check the source to find the other keys.
                 }}
@@ -253,12 +256,13 @@ export default class DetailsScreen extends React.Component {
                 customStyles={{
                   dateIcon: {
                     position: "absolute",
-                    left: 0,
+                    left: 35,
                     top: 4,
                     marginLeft: 0
                   },
                   dateInput: {
-                    marginLeft: 36
+                    borderWidth: 0,
+                    marginLeft: 20
                   }
                   // ... You can check the source to find the other keys.
                 }}
@@ -318,14 +322,23 @@ const styles = StyleSheet.create({
     width: 300,
     height: 400,
     backgroundColor: "#edfcfa",
-    borderRadius: "40px"
+    borderRadius: "40px",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 1,
+      height: 1
+    },
+    shadowOpacity: 0.5,
+    shadowRadius: 10,
+
+    elevation: 19
   },
   myButton3: {
     marginBottom: 50,
     height: 80,
     width: 80,
     borderRadius: 400,
-    backgroundColor: "green"
+    backgroundColor: "#60F534"
   },
   text: {
     textAlign: "center",
