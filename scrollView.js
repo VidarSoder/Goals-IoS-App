@@ -13,7 +13,7 @@ import {
 
 export default function scrollView (props) {
     let screenWidth = props.screenWidth;
-
+    //const [count, setCount] = useState(0);
     const buttonClick = () => {
         props.sendData("value");
     }
@@ -63,7 +63,7 @@ const arr = props.itemArr;
             width: screenWidth - 60,
             marginLeft: 30,
             height: 400,
-            backgroundColor: "powderblue",
+            backgroundColor: item.color,
             borderRadius: "40px"
           }}
         >

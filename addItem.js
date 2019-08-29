@@ -9,19 +9,23 @@ import {
   Keyboard,
   TextInput,
   StyleSheet,
-  DatePickerIOS
+  Text
 } from "react-native";
+import DatePicker from "react-native-datepicker";
+
+const colors = ["#DB6F5E", "#95687C", "#987F8A", "#C78766", "#E5B041"];
 
 export default class DetailsScreen extends React.Component {
   constructor() {
     super();
     this.state = {
       isVisible: false,
-      text: "What Date?",
+      text: "",
       what: "What is it?",
       why: "Why?",
       step: 0,
-      data: null
+      data: null,
+      date: "2019-08-29"
     };
   }
 
@@ -58,23 +62,26 @@ export default class DetailsScreen extends React.Component {
     if (this.state.data !== null) {
       value = JSON.parse(this.state.data);
       const newItem = {
-        when: this.state.text,
+        when: this.state.date,
         what: this.state.what,
-        why: this.state.why
+        why: this.state.why,
+        color: colors[Math.floor(Math.random() * colors.length)]
       };
       value.push(newItem);
     } else {
+      // If localStorage is empty
       value = [];
       const newItem = {
-        when: this.state.text,
+        when: this.state.date,
         what: this.state.what,
-        why: this.state.why
+        why: this.state.why,
+        color: colors[Math.floor(Math.random() * colors.length)]
       };
       value.push(newItem);
     }
     try {
       await AsyncStorage.setItem("Items", JSON.stringify(value));
-      this.props.sendData("value");
+      this.props.sendData("vlue");
     } catch (error) {
       alert(error);
     }
@@ -86,12 +93,30 @@ export default class DetailsScreen extends React.Component {
         <View style={styles.makeThing}>
           <View style={styles.container2}>
             <SimpleAnimation delay={200} duration={500} fade staticType="zoom">
-              <TextInput
-                style={styles.firstText}
-                onChangeText={text => this.setState({ text })}
-                value={this.state.text}
-                returnKeyType="done"
-                onSubmitEditing={event => this.setState({ step: 1 })}
+              <Text style={styles.firstText}>What Date?</Text>
+              <DatePicker
+                style={{ width: 200 }}
+                date={this.state.date}
+                mode="date"
+                placeholder="select date"
+                format="YYYY-MM-DD"
+                confirmBtnText="Confirm"
+                cancelBtnText="Cancel"
+                customStyles={{
+                  dateIcon: {
+                    position: "absolute",
+                    left: 0,
+                    top: 4,
+                    marginLeft: 0
+                  },
+                  dateInput: {
+                    marginLeft: 36
+                  }
+                  // ... You can check the source to find the other keys.
+                }}
+                onDateChange={date => {
+                  this.setState({ date: date, step: 1 });
+                }}
               />
             </SimpleAnimation>
           </View>
@@ -103,12 +128,30 @@ export default class DetailsScreen extends React.Component {
         <View style={styles.makeThing}>
           <View style={styles.container2}>
             <SimpleAnimation delay={200} duration={500} fade staticType="zoom">
-              <TextInput
-                style={styles.firstText}
-                onChangeText={text => this.setState({ text })}
-                value={this.state.text}
-                returnKeyType="done"
-                onSubmitEditing={event => this.setState({ step: 1 })}
+              <Text style={styles.firstText}>What Date?</Text>
+              <DatePicker
+                style={{ width: 200 }}
+                date={this.state.date}
+                mode="date"
+                placeholder="select date"
+                format="YYYY-MM-DD"
+                confirmBtnText="Confirm"
+                cancelBtnText="Cancel"
+                customStyles={{
+                  dateIcon: {
+                    position: "absolute",
+                    left: 0,
+                    top: 4,
+                    marginLeft: 0
+                  },
+                  dateInput: {
+                    marginLeft: 36
+                  }
+                  // ... You can check the source to find the other keys.
+                }}
+                onDateChange={date => {
+                  this.setState({ date: date, step: 1 });
+                }}
               />
               <SimpleAnimation
                 delay={300}
@@ -117,10 +160,12 @@ export default class DetailsScreen extends React.Component {
                 direction={"down"}
                 movementType={"slide"}
               >
+                <Text style={styles.text}>What is it?</Text>
                 <TextInput
-                  style={styles.text}
+                  style={{ textAlign: "center" }}
                   onChangeText={what => this.setState({ what })}
-                  value={this.state.what}
+                  placeholder="Write here.."
+                  //value={this.state.what}
                   returnKeyType="done"
                   onSubmitEditing={event => this.setState({ step: 2 })}
                 />
@@ -135,34 +180,56 @@ export default class DetailsScreen extends React.Component {
         <View style={styles.makeThing}>
           <View style={styles.container2}>
             <SimpleAnimation delay={200} duration={500} fade staticType="zoom">
-              <TextInput
-                style={styles.firstText}
-                onChangeText={text => this.setState({ text })}
-                value={this.state.text}
-                returnKeyType="done"
-                onSubmitEditing={event => this.setState({ step: 1 })}
+              <Text style={styles.firstText}>What Date?</Text>
+              <DatePicker
+                style={{ width: 200 }}
+                date={this.state.date}
+                mode="date"
+                placeholder="select date"
+                format="YYYY-MM-DD"
+                confirmBtnText="Confirm"
+                cancelBtnText="Cancel"
+                customStyles={{
+                  dateIcon: {
+                    position: "absolute",
+                    left: 0,
+                    top: 4,
+                    marginLeft: 0
+                  },
+                  dateInput: {
+                    marginLeft: 36
+                  }
+                  // ... You can check the source to find the other keys.
+                }}
+                onDateChange={date => {
+                  this.setState({ date: date, step: 1 });
+                }}
               />
+              <Text style={styles.text}>What is it?</Text>
               <TextInput
-                style={styles.text}
+                style={{ textAlign: "center" }}
                 onChangeText={what => this.setState({ what })}
+                placeholder="Write here.."
                 value={this.state.what}
                 returnKeyType="done"
                 onSubmitEditing={event => this.setState({ step: 2 })}
               />
-                          <SimpleAnimation
+              <SimpleAnimation
                 delay={300}
                 duration={1000}
                 distance={100}
                 direction={"down"}
                 movementType={"slide"}
               >
-              <TextInput
-                style={styles.text}
-                onChangeText={why => this.setState({ why })}
-                value={this.state.why}
-                returnKeyType="done"
-                onSubmitEditing={event => this.setState({ step: 3 })}
-              />
+                <Text style={styles.text}>Why?</Text>
+                <TextInput
+                  style={{ textAlign: "center" }}
+                  onChangeText={why => this.setState({ why })}
+                  //value={this.state.why}
+                  placeholder="Write here.."
+                  returnKeyType="done"
+                  onSubmitEditing={event => this.setState({ step: 3 })}
+                />
               </SimpleAnimation>
             </SimpleAnimation>
           </View>
@@ -174,22 +241,43 @@ export default class DetailsScreen extends React.Component {
         <View style={styles.makeThing}>
           <View style={styles.container2}>
             <SimpleAnimation delay={200} duration={500} fade staticType="zoom">
-              <TextInput
-                style={styles.firstText}
-                onChangeText={text => this.setState({ text })}
-                value={this.state.text}
-                returnKeyType="done"
-                onSubmitEditing={event => this.setState({ step: 1 })}
+              <Text style={styles.firstText}>What Date?</Text>
+              <DatePicker
+                style={{ width: 200 }}
+                date={this.state.date}
+                mode="date"
+                placeholder="select date"
+                format="YYYY-MM-DD"
+                confirmBtnText="Confirm"
+                cancelBtnText="Cancel"
+                customStyles={{
+                  dateIcon: {
+                    position: "absolute",
+                    left: 0,
+                    top: 4,
+                    marginLeft: 0
+                  },
+                  dateInput: {
+                    marginLeft: 36
+                  }
+                  // ... You can check the source to find the other keys.
+                }}
+                onDateChange={date => {
+                  this.setState({ date: date, step: 1 });
+                }}
               />
+              <Text style={styles.text}>What is it?</Text>
               <TextInput
-                style={styles.text}
+                style={{ textAlign: "center" }}
                 onChangeText={what => this.setState({ what })}
+                placeholder="Write here.."
                 value={this.state.what}
                 returnKeyType="done"
                 onSubmitEditing={event => this.setState({ step: 2 })}
               />
+              <Text style={styles.text}>Why?</Text>
               <TextInput
-                style={styles.text}
+                style={{ textAlign: "center" }}
                 onChangeText={why => this.setState({ why })}
                 value={this.state.why}
                 returnKeyType="done"
@@ -198,16 +286,16 @@ export default class DetailsScreen extends React.Component {
             </SimpleAnimation>
           </View>
           <SimpleAnimation
-                delay={300}
-                duration={1000}
-                distance={100}
-                direction={"down"}
-                movementType={"slide"}
-              >
-          <TouchableOpacity
-            onPress={this._storeData}
-            style={styles.myButton3}
-          ></TouchableOpacity>
+            delay={300}
+            duration={1000}
+            distance={100}
+            direction={"down"}
+            movementType={"slide"}
+          >
+            <TouchableOpacity
+              onPress={this._storeData}
+              style={styles.myButton3}
+            ></TouchableOpacity>
           </SimpleAnimation>
         </View>
       );
@@ -230,25 +318,27 @@ const styles = StyleSheet.create({
     width: 300,
     height: 400,
     backgroundColor: "#edfcfa",
-    borderRadius: "40px",
+    borderRadius: "40px"
   },
   myButton3: {
-    marginBottom: 90,
+    marginBottom: 50,
     height: 80,
     width: 80,
     borderRadius: 400,
-    backgroundColor: "green",
+    backgroundColor: "green"
   },
   text: {
-    textAlign: 'center',
+    textAlign: "center",
     marginTop: 40,
     height: 40,
-    fontSize: "25%"
+    fontSize: "35%",
+    color: "gray"
   },
   firstText: {
-    textAlign: 'center',
+    textAlign: "center",
     alignItems: "center",
     height: 40,
-    fontSize: "25%"
+    fontSize: "35%",
+    color: "gray"
   }
 });
