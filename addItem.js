@@ -12,8 +12,10 @@ import {
   Text
 } from "react-native";
 import DatePicker from "react-native-datepicker";
+import LottieView from "lottie-react-native";
 
-const colors = ["#DB6F5E", "#95687C", "#987F8A", "#C78766", "#E5B041"];
+//const colors = ["#DB6F5E", "#95687C", "#987F8A", "#C78766", "#E5B041"];
+const colors = ["#ffffff"];
 
 export default class DetailsScreen extends React.Component {
   constructor() {
@@ -95,7 +97,7 @@ export default class DetailsScreen extends React.Component {
             <SimpleAnimation delay={200} duration={600} fade staticType="zoom">
               <Text style={styles.firstText}>What Date?</Text>
               <DatePicker
-                style={{ width: 200 }}
+                style={{ width: 200, }}
                 date={this.state.date}
                 mode="date"
                 placeholder="select date"
@@ -272,7 +274,7 @@ export default class DetailsScreen extends React.Component {
               />
               <Text style={styles.text}>What is it?</Text>
               <TextInput
-                style={{ textAlign: "center" }}
+                style={{ textAlign: "center",  }}
                 onChangeText={what => this.setState({ what })}
                 placeholder="Write here.."
                 value={this.state.what}
@@ -299,7 +301,13 @@ export default class DetailsScreen extends React.Component {
             <TouchableOpacity
               onPress={this._storeData}
               style={styles.myButton3}
-            ></TouchableOpacity>
+            >
+              <LottieView
+                source={require("./animations/animation.json")}
+                autoPlay
+                loop={false}
+              />
+            </TouchableOpacity>
           </SimpleAnimation>
         </View>
       );
@@ -321,7 +329,7 @@ const styles = StyleSheet.create({
     marginTop: 90,
     width: 300,
     height: 400,
-    backgroundColor: "#edfcfa",
+/*     backgroundColor: "#edfcfa",
     borderRadius: "40px",
     shadowColor: "#000",
     shadowOffset: {
@@ -331,14 +339,14 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.5,
     shadowRadius: 10,
 
-    elevation: 19
+    elevation: 19 */
   },
   myButton3: {
     marginBottom: 50,
     height: 80,
     width: 80,
     borderRadius: 400,
-    backgroundColor: "#60F534"
+    //backgroundColor: "#60F534"
   },
   text: {
     textAlign: "center",

@@ -15,6 +15,7 @@ import {
 } from "react-native";
 import AllItemsScroll from "./scrollView";
 import AddItem from "./addItem";
+import LottieView from "lottie-react-native";
 
 class HomeScreen extends React.Component {
   constructor() {
@@ -30,13 +31,15 @@ class HomeScreen extends React.Component {
   newNote = () => {
     if (this.state.isVisisble) {
       this.setState({ isVisible: false });
+      
     } else {
       this.setState({ isVisible: true });
     }
+
   };
 
   _retrieveData = async () => {
-   // AsyncStorage.clear();
+    // AsyncStorage.clear();
 
     try {
       const value = await AsyncStorage.getItem("Items");
@@ -54,6 +57,7 @@ class HomeScreen extends React.Component {
   getData(val) {
     this._retrieveData();
     this.setState({ isVisible: false });
+
   }
 
   onClick = () => {
@@ -67,7 +71,7 @@ class HomeScreen extends React.Component {
       return (
         <View style={styles.container}>
           {this.state.isVisible ? (
-            <SimpleAnimation delay={100} duration={100} fade staticType="zoom">
+            <SimpleAnimation delay={200} duration={1000} fade staticType="zoom">
               <AddItem sendData={this.getData} />
               <View>
                 <TouchableOpacity
@@ -77,12 +81,11 @@ class HomeScreen extends React.Component {
               </View>
             </SimpleAnimation>
           ) : (
-
-            <AllItemsScroll
-              itemArr={arr}
-              screenWidth={screenWidth}
-              sendData={this.newNote}
-            />
+              <AllItemsScroll
+                itemArr={arr}
+                screenWidth={screenWidth}
+                sendData={this.newNote}
+              />
           )}
         </View>
       );
@@ -102,7 +105,6 @@ class HomeScreen extends React.Component {
       );
     } else {
       return (
-
         <View style={styles.container}>
           <TouchableOpacity
             style={{
@@ -121,7 +123,6 @@ class HomeScreen extends React.Component {
             ></TouchableOpacity>
           </View>
         </View>
-
       );
     }
   }
@@ -156,7 +157,8 @@ const styles = StyleSheet.create({
     fontSize: "25%"
   },
   textStyle2: {
-    paddingLeft: 10,
+    paddingLeft: "10%",
+    paddingRight: "10%",
     fontWeight: "bold",
     textAlign: "left",
     fontFamily: "'Roboto', sans-serif",
@@ -165,10 +167,11 @@ const styles = StyleSheet.create({
     fontSize: "25%"
   },
   textStyle3: {
-    paddingLeft: 10,
+    paddingLeft: "10%",
+    paddingRight: "10%",
     textAlign: "left",
     fontFamily: "'Roboto', sans-serif",
-    height: 40,
+    height: 80,
     fontSize: "25%",
     color: "gray"
   }
