@@ -27,7 +27,8 @@ export default class DetailsScreen extends React.Component {
       why: "Why?",
       step: 0,
       data: null,
-      date: "2019-08-29"
+      date: "2019-08-29",
+      pictureBase64: null,
     };
   }
 

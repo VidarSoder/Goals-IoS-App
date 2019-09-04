@@ -1,5 +1,6 @@
 import React from "react";
 import { SimpleAnimation } from "react-native-simple-animations";
+import LottieView from "lottie-react-native";
 import ProgressCircle from "react-native-progress-circle";
 
 //import { ProgressCircle }  from 'react-native-svg-charts'
@@ -36,7 +37,13 @@ export default function scrollView(props) {
   const arr = props.itemArr;
   return (
     <View style={styles.container}>
-      <SimpleAnimation style={styles.container} delay={200} duration={500} fade staticType="zoom">
+      <SimpleAnimation
+        style={styles.container}
+        delay={200}
+        duration={500}
+        fade
+        staticType="zoom"
+      >
         <TouchableHighlight
           style={{
             alignSelf: "flex-end",
@@ -105,12 +112,15 @@ export default function scrollView(props) {
             );
           })}
         </ScrollView>
-      <View>
-        <TouchableOpacity
-          onPress={buttonClick}
-          style={styles.myButton}
-        ></TouchableOpacity>
-      </View>
+        <View>
+          <TouchableOpacity onPress={buttonClick} style={styles.myButton}>
+            <LottieView
+              source={require("./animations/addItemBasket.json")}
+              autoPlay
+              loop={false}
+            />
+          </TouchableOpacity>
+        </View>
       </SimpleAnimation>
     </View>
   );
@@ -127,7 +137,7 @@ const styles = StyleSheet.create({
     height: 80,
     width: 80,
     borderRadius: 400,
-    backgroundColor: "red",
+    backgroundColor: "#ff9c9c",
     alignItems: "center",
     justifyContent: "center"
   },
