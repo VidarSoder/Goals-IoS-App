@@ -2,6 +2,7 @@ import React from "react";
 import { SimpleAnimation } from "react-native-simple-animations";
 import LottieView from "lottie-react-native";
 import ProgressCircle from "react-native-progress-circle";
+import imagePicker from "react-native-imagepicker";
 
 //import { ProgressCircle }  from 'react-native-svg-charts'
 import {
@@ -14,6 +15,14 @@ import {
   TouchableHighlight,
   Alert
 } from "react-native";
+
+{
+  /* <Image
+source={{ uri: uri, isStatic: true }}
+style={{width: 200, height: 200}}
+/>
+ */
+}
 
 export default function scrollView(props) {
   let screenWidth = props.screenWidth;
@@ -35,6 +44,8 @@ export default function scrollView(props) {
     );
   };
   const arr = props.itemArr;
+  alert(arr[0].photo);
+  alert(arr[0].photo);
   return (
     <View style={styles.container}>
       <SimpleAnimation
@@ -75,13 +86,14 @@ export default function scrollView(props) {
                   height: 400,
                   backgroundColor: "white"
                 }}
+                key={Math.random()}
               >
                 <View
                   style={{
                     width: screenWidth - 60,
                     marginLeft: 30,
                     height: 400,
-                    backgroundColor: item.color,
+                    backgroundColor: "#faedc8",
                     borderRadius: "40px",
                     shadowColor: "#000",
                     shadowOffset: {
@@ -104,7 +116,46 @@ export default function scrollView(props) {
                 >
                   <Text style={{ fontSize: 18 }}> 30% </Text>
                 </ProgressCircle> */}
-                  <Text style={styles.textStyle}>{item.when}</Text>
+                  {/*  <Text style={styles.textStyle}>{item.when}</Text> */}
+                  <View
+                    style={{
+                      overflow: "hidden",
+                      borderTopRightRadius: 40,
+                      borderTopLeftRadius: 40
+                    }}
+                  >
+                    <Image
+                      source={{ uri: item.photo, isStatic: true }}
+                      style={{
+                        width: screenWidth - 60,
+                        overflow: "hidden",
+                        height: 250
+                      }}
+                    />
+                    <View
+                      style={{
+                        position: "absolute",
+                        top: 0,
+                        left: screenWidth - 170,
+                        right: 0,
+                        bottom: 140,
+                        justifyContent: "center",
+                        alignItems: "center"
+                      }}
+                    >
+                    <ProgressCircle
+                      percent={50}
+                      radius={50}
+                      borderWidth={8}
+                      color="#3399FF"
+                      shadowColor="#999"
+                      bgColor={item.color}
+                    >
+                      <Text style={{ fontSize: 18 }}> 9 days </Text>
+                    </ProgressCircle>
+                    </View>
+                  </View>
+
                   <Text style={styles.textStyle2}>{item.what}</Text>
                   <Text style={styles.textStyle3}>{item.why}</Text>
                 </View>
@@ -143,28 +194,25 @@ const styles = StyleSheet.create({
   },
   textStyle: {
     textAlign: "center",
-    fontFamily: "'Roboto', sans-serif",
     marginTop: 40,
-    height: 40,
-    fontSize: "25%"
+    fontSize: 20,
+    height: 40
   },
   textStyle2: {
     paddingLeft: "10%",
     paddingRight: "10%",
     fontWeight: "bold",
     textAlign: "left",
-    fontFamily: "'Roboto', sans-serif",
-    marginTop: 150,
-    height: 40,
-    fontSize: "25%"
+    fontSize: 20,
+
+    height: 40
   },
   textStyle3: {
     paddingLeft: "10%",
     paddingRight: "10%",
     textAlign: "left",
-    fontFamily: "'Roboto', sans-serif",
     height: 40,
-    fontSize: "25%",
+    fontSize: 20,
     color: "gray"
   }
 });

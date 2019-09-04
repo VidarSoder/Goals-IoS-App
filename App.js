@@ -16,13 +16,16 @@ import {
 import AllItemsScroll from "./scrollView";
 import AddItem from "./addItem";
 import LottieView from "lottie-react-native";
+//import imagePicker from "react-native-imagepicker";
+//import ImagePicker from 'react-native-image-picker';
+//const imagePicker = require('react-native-imagepicker');
 
 class HomeScreen extends React.Component {
   constructor() {
     super();
     this.state = {
       isVisible: false,
-      data: null
+      photo: "https://facebook.github.io/react-native/img/tiny_logo.png"
     };
     this.getData = this.getData.bind(this);
     this.animatedValue = new Animated.Value(0);
@@ -31,15 +34,13 @@ class HomeScreen extends React.Component {
   newNote = () => {
     if (this.state.isVisisble) {
       this.setState({ isVisible: false });
-      
     } else {
       this.setState({ isVisible: true });
     }
-
   };
 
   _retrieveData = async () => {
-    // AsyncStorage.clear();
+    //AsyncStorage.clear();
 
     try {
       const value = await AsyncStorage.getItem("Items");
@@ -57,7 +58,6 @@ class HomeScreen extends React.Component {
   getData(val) {
     this._retrieveData();
     this.setState({ isVisible: false });
-
   }
 
   onClick = () => {
@@ -67,6 +67,7 @@ class HomeScreen extends React.Component {
   render() {
     let screenWidth = Dimensions.get("window").width;
     const arr = this.state.data;
+    let uri = this.state.photo;
     if (arr) {
       return (
         <View style={styles.container}>
@@ -81,11 +82,13 @@ class HomeScreen extends React.Component {
               </View>
             </SimpleAnimation>
           ) : (
+            <View>
               <AllItemsScroll
                 itemArr={arr}
                 screenWidth={screenWidth}
                 sendData={this.newNote}
               />
+            </View>
           )}
         </View>
       );
@@ -153,8 +156,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
     fontFamily: "'Roboto', sans-serif",
     marginTop: 40,
-    height: 40,
-    fontSize: "25%"
+    height: 40
   },
   textStyle2: {
     paddingLeft: "10%",
@@ -163,8 +165,7 @@ const styles = StyleSheet.create({
     textAlign: "left",
     fontFamily: "'Roboto', sans-serif",
     marginTop: 150,
-    height: 40,
-    fontSize: "25%"
+    height: 40
   },
   textStyle3: {
     paddingLeft: "10%",
@@ -172,7 +173,7 @@ const styles = StyleSheet.create({
     textAlign: "left",
     fontFamily: "'Roboto', sans-serif",
     height: 80,
-    fontSize: "25%",
+
     color: "gray"
   }
 });
