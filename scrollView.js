@@ -3,6 +3,7 @@ import { SimpleAnimation } from "react-native-simple-animations";
 import LottieView from "lottie-react-native";
 import ProgressCircle from "react-native-progress-circle";
 import imagePicker from "react-native-imagepicker";
+import moment from "moment";
 
 //import { ProgressCircle }  from 'react-native-svg-charts'
 import {
@@ -44,8 +45,6 @@ export default function scrollView(props) {
     );
   };
   const arr = props.itemArr;
-  alert(arr[0].photo);
-  alert(arr[0].photo);
   return (
     <View style={styles.container}>
       <SimpleAnimation
@@ -78,6 +77,19 @@ export default function scrollView(props) {
           contentInset={{ top: 0, left: 0, bottom: 0, right: 0 }}
         >
           {arr.map(item => {
+            let dateTime = new Date(item.date);
+            let start = moment();
+            let end = moment(dateTime);
+            let newDate = end.diff(start);
+            newDate = ((newDate / 1000) / 60 / 60 / 24)
+            console.log(start, "start")
+            console.log(end, 'end', ' ')
+            console.log(item.dateUnFiltered, "un filted")
+            console.log(newDate, "new dates")
+            console.log('___')
+            const diff = item.dateUnFiltered - newDate;
+            const datePercent = Math.round((diff / item.dateUnFiltered) * 100);
+
             return (
               <TouchableOpacity
                 style={{
@@ -86,7 +98,7 @@ export default function scrollView(props) {
                   height: 400,
                   backgroundColor: "white"
                 }}
-                key={Math.random()}
+                key={item.id}
               >
                 <View
                   style={{
@@ -106,17 +118,6 @@ export default function scrollView(props) {
                     elevation: 19
                   }}
                 >
-                  {/*            <ProgressCircle
-                  percent={50}
-                  radius={70}
-                  borderWidth={8}
-                  color="#3399FF"
-                  shadowColor="#999"
-                  bgColor={item.color}
-                >
-                  <Text style={{ fontSize: 18 }}> 30% </Text>
-                </ProgressCircle> */}
-                  {/*  <Text style={styles.textStyle}>{item.when}</Text> */}
                   <View
                     style={{
                       overflow: "hidden",
@@ -143,16 +144,16 @@ export default function scrollView(props) {
                         alignItems: "center"
                       }}
                     >
-                    <ProgressCircle
-                      percent={50}
-                      radius={50}
-                      borderWidth={8}
-                      color="#3399FF"
-                      shadowColor="#999"
-                      bgColor={item.color}
-                    >
-                      <Text style={{ fontSize: 18 }}> 9 days </Text>
-                    </ProgressCircle>
+                      <ProgressCircle
+                        percent={datePercent}
+                        radius={50}
+                        borderWidth={8}
+                        color="red"
+                        shadowColor="#999"
+                        bgColor="yellow"
+                      >
+                        <Text style={{ fontSize: 18 }}> {diff} days </Text>
+                      </ProgressCircle>
                     </View>
                   </View>
 
@@ -211,7 +212,7 @@ const styles = StyleSheet.create({
     paddingLeft: "10%",
     paddingRight: "10%",
     textAlign: "left",
-    height: 40,
+    maxHeight: "25%",
     fontSize: 20,
     color: "gray"
   }

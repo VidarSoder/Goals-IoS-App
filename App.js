@@ -68,28 +68,20 @@ class HomeScreen extends React.Component {
     let screenWidth = Dimensions.get("window").width;
     const arr = this.state.data;
     let uri = this.state.photo;
-    if (arr) {
+    if (arr && this.state.isVisible) {
+      return (
+        <SimpleAnimation delay={200} duration={1000} fade staticType="zoom">
+          <AddItem sendData={this.getData} />
+        </SimpleAnimation>
+      );
+    } else if (arr && !this.state.isVisible) {
       return (
         <View style={styles.container}>
-          {this.state.isVisible ? (
-            <SimpleAnimation delay={200} duration={1000} fade staticType="zoom">
-              <AddItem sendData={this.getData} />
-              <View>
-                <TouchableOpacity
-                  onPress={this.newNote}
-                  style={styles.myButton2}
-                ></TouchableOpacity>
-              </View>
-            </SimpleAnimation>
-          ) : (
-            <View>
-              <AllItemsScroll
-                itemArr={arr}
-                screenWidth={screenWidth}
-                sendData={this.newNote}
-              />
-            </View>
-          )}
+          <AllItemsScroll
+            itemArr={arr}
+            screenWidth={screenWidth}
+            sendData={this.newNote}
+          />
         </View>
       );
     } else if (this.state.isVisible === true) {
