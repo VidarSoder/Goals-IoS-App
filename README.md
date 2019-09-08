@@ -14,12 +14,15 @@ Use expo to show it on your iphone.
 ### demo
 
 If you dont feel like installing it, here's the latest version as a gif:
-https://imgur.com/gallery/zdqvngC?fbclid=IwAR2DRLb3BzVmCYlkO0hC6VNFMxR9RNgDCBNcxwSrEdSD8zJnYtfY-fgbb3A
+(updating this when i get bigger updates)
+https://imgur.com/gallery/2NbQHfr?fbclid=IwAR2MStuFSaTo6hTcAes8tExjr0Q-ILpfb12fH_sPYfCSZECIpXcR-03gEdU
+
 
 
 
 #### Old versions:
- 
+ 2.
+ https://imgur.com/gallery/zdqvngC?fbclid=IwAR2DRLb3BzVmCYlkO0hC6VNFMxR9RNgDCBNcxwSrEdSD8zJnYtfY-fgbb3A
  
  1: https://imgur.com/sCk1PXQ?r&fbclid=IwAR2-D_hKq8OG6i4vLcnk7tInPLUeXynPk1hxfYZBy4t79ZgIOSroa9Zjv2Y
 
