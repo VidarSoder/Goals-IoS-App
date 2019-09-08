@@ -85,9 +85,9 @@ export default function scrollView(props) {
             console.log(start, "start")
             console.log(end, 'end', ' ')
             console.log(item.dateUnFiltered, "un filted")
-            console.log(newDate, "new dates")
+            console.log(Math.ceil(newDate), "new dates")
             console.log('___')
-            const diff = item.dateUnFiltered - newDate;
+            const diff = item.dateUnFiltered - Math.ceil(newDate);
             const datePercent = Math.round((diff / item.dateUnFiltered) * 100);
 
             return (
@@ -152,7 +152,7 @@ export default function scrollView(props) {
                         shadowColor="#999"
                         bgColor="yellow"
                       >
-                        <Text style={{ fontSize: 18 }}> {diff} days </Text>
+                        <Text style={{ fontSize: 18 }}> {Math.ceil(newDate)} days </Text>
                       </ProgressCircle>
                     </View>
                   </View>
