@@ -1,7 +1,5 @@
 import React from "react";
 import { SimpleAnimation } from "react-native-simple-animations";
-import HorScroll from "./scrollView";
-import { createStackNavigator, createAppContainer } from "react-navigation";
 import {
   View,
   TouchableOpacity,

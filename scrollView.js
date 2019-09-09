@@ -2,10 +2,8 @@ import React from "react";
 import { SimpleAnimation } from "react-native-simple-animations";
 import LottieView from "lottie-react-native";
 import ProgressCircle from "react-native-progress-circle";
-import imagePicker from "react-native-imagepicker";
 import moment from "moment";
 
-//import { ProgressCircle }  from 'react-native-svg-charts'
 import {
   View,
   StyleSheet,
@@ -17,13 +15,6 @@ import {
   Alert
 } from "react-native";
 
-{
-  /* <Image
-source={{ uri: uri, isStatic: true }}
-style={{width: 200, height: 200}}
-/>
- */
-}
 
 export default function scrollView(props) {
   let screenWidth = props.screenWidth;
