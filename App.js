@@ -170,6 +170,25 @@ const styles = StyleSheet.create({
   }
 });
 
+/* textStyle2: {
+  paddingLeft: "10%",
+  paddingRight: "10%",
+  fontWeight: "bold",
+  textAlign: "left",
+  fontFamily: "'Roboto', sans-serif",
+  marginTop: 150,
+  height: 40
+},
+textStyle3: {
+  paddingLeft: "10%",
+  paddingRight: "10%",
+  textAlign: "left",
+  fontFamily: "'Roboto', sans-serif",
+  height: 80,
+
+  color: "gray"
+} */
+
 export default class App extends React.Component {
   render() {
     return <HomeScreen />;
