@@ -94,21 +94,12 @@ export default function scrollView(props) {
             return (
               <TouchableOpacity
                 onPress={() => editMenu(item.id)}
-                style={
-                  item.editActive !== "active"
-                    ? {
-                        marginTop: 20,
-                        width: screenWidth,
-                        height: 400,
-                        backgroundColor: "white"
-                      }
-                    : {
-                        marginTop: 20,
-                        width: screenWidth,
-                        height: 400,
-                        backgroundColor: "white"
-                      }
-                }
+                style={{
+                  marginTop: 20,
+                  width: screenWidth,
+                  height: 400,
+                  backgroundColor: "white"
+                }}
                 key={item.id}
               >
                 <View
@@ -134,7 +125,7 @@ export default function scrollView(props) {
                           width: screenWidth - 60,
                           marginLeft: 30,
                           height: 400,
-                          backgroundColor: "#faedc8",
+                          backgroundColor: "grey",
                           borderRadius: "40px",
                           shadowColor: "#000",
                           shadowOffset: {
@@ -155,18 +146,24 @@ export default function scrollView(props) {
                       borderTopLeftRadius: 40
                     }}
                   >
+                    {item.editActive !== "active" && (
+                      <TouchableOpacity
+                      >
+                        <LottieView
+                          source={require("./animations/animation.json")}
+                          autoPlay
+                          loop={false}
+                        />
+                      </TouchableOpacity>
+                    )}
                     <Image
                       source={{ uri: item.photo, isStatic: true }}
                       style={{
                         width: screenWidth - 60,
                         overflow: "hidden",
-                        height: 250,
+                        height: 250
                       }}
-                      blurRadius={
-                        item.editActive !== "active"
-                        ?
-                        1 : 60 
-                      }
+                      blurRadius={item.editActive !== "active" ? 1 : 60}
                     />
                     <View
                       style={{
@@ -179,33 +176,45 @@ export default function scrollView(props) {
                         alignItems: "center"
                       }}
                     >
-                       {item.editActive !== "active" && 
-                      <ProgressCircle
-                        percent={datePercent}
-                        radius={50}
-                        borderWidth={8}
-                        color="red"
-                        shadowColor="#999"
-                        bgColor="yellow"
-                      >
-                        <Text style={{ fontSize: 18 }}>
-                          {" "}
-                          {Math.ceil(newDate)} days{" "}
-                        </Text>
-                      </ProgressCircle>
-                       }
+                      {item.editActive !== "active" && (
+                        <ProgressCircle
+                          percent={datePercent}
+                          radius={50}
+                          borderWidth={8}
+                          color="red"
+                          shadowColor="#999"
+                          bgColor="yellow"
+                        >
+                          <Text style={{ fontSize: 18 }}>
+                            {" "}
+                            {Math.ceil(newDate)} days{" "}
+                          </Text>
+                        </ProgressCircle>
+                      )}
                     </View>
                   </View>
 
-                  <Text style={styles.textStyle2}>{item.what}</Text>
-                  <Text style={styles.textStyle3}>{item.why}</Text>
-
+                  <Text
+                    style={
+                      item.editActive !== "active"
+                        ? styles.textStyle2
+                        : styles.textStyle22
+                    }
+                  >
+                    {item.what}
+                  </Text>
+                  <Text
+                    style={
+                      item.editActive !== "active"
+                        ? styles.textStyle3
+                        : styles.textStyle33
+                    }
+                  >
+                    {item.why}
+                  </Text>
                 </View>
               </TouchableOpacity>
             );
-            /*                     } else {
-                      return <Text> hej </Text>
-                    } */
           })}
         </ScrollView>
         <View>
@@ -259,17 +268,11 @@ const styles = StyleSheet.create({
     maxHeight: "25%",
     fontSize: 20,
     color: "gray"
-  }
-  /*   wrapperStyle1: {
-    marginTop: 20,
-    width: screenWidth,
-    height: 400,
-    backgroundColor: "white"
   },
-  wrapperStyle2: {
-    marginTop: 10,
-    width: screenWidth,
-    height: 400,
-    backgroundColor: "white"
-  } */
+  textStyle22: {
+    display: "none"
+  },
+  textStyle33: {
+    display: "none"
+  }
 });

@@ -62,7 +62,6 @@ class HomeScreen extends React.Component {
 
   onClick = () => {
     this.setState({ update: this.update + 1 });
-    alert("works");
   };
 
   render() {
