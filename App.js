@@ -1,6 +1,5 @@
 import React from "react";
 import { SimpleAnimation } from "react-native-simple-animations";
-import { createStackNavigator, createAppContainer } from "react-navigation";
 import {
   View,
   Text,
@@ -25,7 +24,8 @@ class HomeScreen extends React.Component {
     super();
     this.state = {
       isVisible: false,
-      photo: "https://facebook.github.io/react-native/img/tiny_logo.png"
+      photo: "https://facebook.github.io/react-native/img/tiny_logo.png",
+      update: 0
     };
     this.getData = this.getData.bind(this);
     this.animatedValue = new Animated.Value(0);
@@ -61,12 +61,14 @@ class HomeScreen extends React.Component {
   }
 
   onClick = () => {
+    this.setState({ update: this.update + 1 });
     alert("works");
   };
 
   render() {
     let screenWidth = Dimensions.get("window").width;
     const arr = this.state.data;
+    console.log(arr);
     let uri = this.state.photo;
     if (arr && this.state.isVisible) {
       return (
@@ -76,13 +78,17 @@ class HomeScreen extends React.Component {
       );
     } else if (arr && !this.state.isVisible) {
       return (
-        <View style={styles.container}>
-          <AllItemsScroll
-            itemArr={arr}
-            screenWidth={screenWidth}
-            sendData={this.newNote}
-          />
-        </View>
+        <>
+          <Image source={require("./logo.png")} style={styles.logo} />
+          <View style={styles.container}>
+            <AllItemsScroll
+              itemArr={arr}
+              screenWidth={screenWidth}
+              sendData={this.newNote}
+              updateItem={this.onClick}
+            />
+          </View>
+        </>
       );
     } else if (this.state.isVisible === true) {
       return (
@@ -122,6 +128,8 @@ class HomeScreen extends React.Component {
     }
   }
 }
+
+let screenWidth = Dimensions.get("window").width;
 
 const styles = StyleSheet.create({
   container: {
@@ -167,27 +175,18 @@ const styles = StyleSheet.create({
     height: 80,
 
     color: "gray"
+  },
+  logo: {
+    position: "absolute",
+    alignItems: "top",
+    justifyContent: "center",
+    width: screenWidth - 120,
+    height: 65,
+    top: "6%",
+    left: "5%",
+    zIndex: 2
   }
 });
-
-/* textStyle2: {
-  paddingLeft: "10%",
-  paddingRight: "10%",
-  fontWeight: "bold",
-  textAlign: "left",
-  fontFamily: "'Roboto', sans-serif",
-  marginTop: 150,
-  height: 40
-},
-textStyle3: {
-  paddingLeft: "10%",
-  paddingRight: "10%",
-  textAlign: "left",
-  fontFamily: "'Roboto', sans-serif",
-  height: 80,
-
-  color: "gray"
-} */
 
 export default class App extends React.Component {
   render() {

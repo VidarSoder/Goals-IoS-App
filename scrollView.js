@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { SimpleAnimation } from "react-native-simple-animations";
 import LottieView from "lottie-react-native";
 import ProgressCircle from "react-native-progress-circle";
@@ -15,10 +15,9 @@ import {
   Alert
 } from "react-native";
 
-
 export default function scrollView(props) {
   let screenWidth = props.screenWidth;
-  //const [count, setCount] = useState(0);
+  let [remove, setRemove] = useState([]);
   const buttonClick = () => {
     props.sendData("value");
   };
@@ -35,7 +34,16 @@ export default function scrollView(props) {
          Lycka till! /Q`
     );
   };
+
+  const editMenu = id => {
+    const proper = arr.find(item => item.id == id);
+    props.itemArr[id].editActive = "active";
+    console.log(props.itemArr[0]);
+    props.updateItem("value");
+  };
+
   const arr = props.itemArr;
+  //console.log(arr)
   return (
     <View style={styles.container}>
       <SimpleAnimation
@@ -72,42 +80,73 @@ export default function scrollView(props) {
             let start = moment();
             let end = moment(dateTime);
             let newDate = end.diff(start);
-            newDate = ((newDate / 1000) / 60 / 60 / 24)
-            console.log(start, "start")
-            console.log(end, 'end', ' ')
-            console.log(item.dateUnFiltered, "un filted")
-            console.log(Math.ceil(newDate), "new dates")
-            console.log('___')
+            newDate = newDate / 1000 / 60 / 60 / 24;
+            /*             console.log(newDate,'this is new date')
+            console.log(item.date)
+            console.log(dateTime, 'todays date') */
             const diff = item.dateUnFiltered - Math.ceil(newDate);
             const datePercent = Math.round((diff / item.dateUnFiltered) * 100);
+            /* if (item.editActive !== 'active'){ */
+            console.log("active item", item.editActive);
+            /*             if (item.editActive !== 'active'){
 
+              } */
             return (
               <TouchableOpacity
-                style={{
-                  marginTop: 20,
-                  width: screenWidth,
-                  height: 400,
-                  backgroundColor: "white"
-                }}
+                onPress={() => editMenu(item.id)}
+                style={
+                  item.editActive !== "active"
+                    ? {
+                        marginTop: 20,
+                        width: screenWidth,
+                        height: 400,
+                        backgroundColor: "white"
+                      }
+                    : {
+                        marginTop: 20,
+                        width: screenWidth,
+                        height: 400,
+                        backgroundColor: "white"
+                      }
+                }
                 key={item.id}
               >
                 <View
-                  style={{
-                    width: screenWidth - 60,
-                    marginLeft: 30,
-                    height: 400,
-                    backgroundColor: "#faedc8",
-                    borderRadius: "40px",
-                    shadowColor: "#000",
-                    shadowOffset: {
-                      width: 1,
-                      height: 1
-                    },
-                    shadowOpacity: 0.5,
-                    shadowRadius: 10,
+                  style={
+                    item.editActive !== "active"
+                      ? {
+                          width: screenWidth - 60,
+                          marginLeft: 30,
+                          height: 400,
+                          backgroundColor: "#faedc8",
+                          borderRadius: "40px",
+                          shadowColor: "#000",
+                          shadowOffset: {
+                            width: 1,
+                            height: 1
+                          },
+                          shadowOpacity: 0.5,
+                          shadowRadius: 10,
 
-                    elevation: 19
-                  }}
+                          elevation: 19
+                        }
+                      : {
+                          width: screenWidth - 60,
+                          marginLeft: 30,
+                          height: 400,
+                          backgroundColor: "#faedc8",
+                          borderRadius: "40px",
+                          shadowColor: "#000",
+                          shadowOffset: {
+                            width: 1,
+                            height: 1
+                          },
+                          shadowOpacity: 0.5,
+                          shadowRadius: 10,
+
+                          elevation: 19
+                        }
+                  }
                 >
                   <View
                     style={{
@@ -121,8 +160,13 @@ export default function scrollView(props) {
                       style={{
                         width: screenWidth - 60,
                         overflow: "hidden",
-                        height: 250
+                        height: 250,
                       }}
+                      blurRadius={
+                        item.editActive !== "active"
+                        ?
+                        1 : 60 
+                      }
                     />
                     <View
                       style={{
@@ -135,6 +179,7 @@ export default function scrollView(props) {
                         alignItems: "center"
                       }}
                     >
+                       {item.editActive !== "active" && 
                       <ProgressCircle
                         percent={datePercent}
                         radius={50}
@@ -143,16 +188,24 @@ export default function scrollView(props) {
                         shadowColor="#999"
                         bgColor="yellow"
                       >
-                        <Text style={{ fontSize: 18 }}> {Math.ceil(newDate)} days </Text>
+                        <Text style={{ fontSize: 18 }}>
+                          {" "}
+                          {Math.ceil(newDate)} days{" "}
+                        </Text>
                       </ProgressCircle>
+                       }
                     </View>
                   </View>
 
                   <Text style={styles.textStyle2}>{item.what}</Text>
                   <Text style={styles.textStyle3}>{item.why}</Text>
+
                 </View>
               </TouchableOpacity>
             );
+            /*                     } else {
+                      return <Text> hej </Text>
+                    } */
           })}
         </ScrollView>
         <View>
@@ -207,4 +260,16 @@ const styles = StyleSheet.create({
     fontSize: 20,
     color: "gray"
   }
+  /*   wrapperStyle1: {
+    marginTop: 20,
+    width: screenWidth,
+    height: 400,
+    backgroundColor: "white"
+  },
+  wrapperStyle2: {
+    marginTop: 10,
+    width: screenWidth,
+    height: 400,
+    backgroundColor: "white"
+  } */
 });
