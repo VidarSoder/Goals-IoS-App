@@ -15,6 +15,7 @@ import {
 import AllItemsScroll from "./scrollView";
 import AddItem from "./addItem";
 import LottieView from "lottie-react-native";
+import moment from 'moment'
 //import imagePicker from "react-native-imagepicker";
 //import ImagePicker from 'react-native-image-picker';
 //const imagePicker = require('react-native-imagepicker');
@@ -25,7 +26,7 @@ class HomeScreen extends React.Component {
     this.state = {
       isVisible: false,
       photo: "https://facebook.github.io/react-native/img/tiny_logo.png",
-      update: 0
+      update: 0,
     };
     this.getData = this.getData.bind(this);
     this.animatedValue = new Animated.Value(0);
@@ -110,7 +111,7 @@ class HomeScreen extends React.Component {
             style={{
               width: screenWidth - 60,
               height: 400,
-              backgroundColor: "Blue",
+              backgroundColor: "green",
               borderRadius: "40px",
               borderStyle: "dotted"
             }}
