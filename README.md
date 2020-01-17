@@ -12,7 +12,7 @@ Description in Swedish how you use the app:
 `npm start`
 :shipit: :shipit: :shipit:
 
-Use expo to show it on your iphone.
+Use expo to show it on your iphone. ( https://expo.io/learn )
 
 ### demo
 
