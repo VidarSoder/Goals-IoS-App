@@ -26,7 +26,7 @@
     "react-native-image-picker": "^1.1.0",
     "react-native-imagepicker": "^2.0.0",
     "react-native-progress-circle": "^2.0.1",
-    "react-native-reanimated": "^1.1.0",
+    "react-native-reanimated": "^2.10.0",
     "react-native-simple-animations": "^0.2.1",
     "react-native-svg-charts": "^5.3.0",
     "react-native-web": "^0.11.4",
